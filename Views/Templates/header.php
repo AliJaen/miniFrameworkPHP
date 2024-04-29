@@ -8,6 +8,7 @@
   <link rel="shortcut icon" type="image/png" href="<?php echo media(); ?>/img/logos/favicon.png" />
   <link rel="shortcut icon" type="image/png" href="<?php echo media(); ?>/img/logos/favicon.png" />
   <link rel="stylesheet" href="<?php echo media(); ?>/css/styles.min.css" />
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" /> -->
 </head>
 
 <body>
