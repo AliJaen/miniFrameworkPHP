@@ -1,13 +1,5 @@
 <?php
 
-function base_url() {
-    return base_url;
-}
-
-function media() {
-    return base_url . "/Assets";
-}
-
 function loadheader($data = "") {
     $view_header = "Views/Templates/header.php";
 

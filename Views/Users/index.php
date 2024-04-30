@@ -9,6 +9,7 @@
                         <div class="mb-3 mb-sm-0">
                             <h1><?php echo $data["page_name"]; ?></h1>
                             <?php debug($data) ?>
+                            <button class="btn d-flex border-dark" id="btnRecord"><i class="ti ti-video fs-6"></i><span class="mb-0 fs-3">&MediumSpace;Record Screen</span></button>
                         </div>
                     </div>
                 </div>

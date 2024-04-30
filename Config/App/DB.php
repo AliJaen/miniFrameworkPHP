@@ -31,6 +31,53 @@ class DB extends DatabaseConnection {
     }
 
     /**
+     * List data from `n` tables form the DB
+     */
+    public static function multiJoin($parent, $foreigns, $params = [], $limit = null) {
+        $cols_values = "";
+        $limits = "";
+        $joins = "";
+
+        // Prepare the condition WHERE if exist params
+        if (!empty($params)) {
+            $cols_values .= "WHERE";
+            foreach($params as $key => $value) {
+                $cols_values .= " {$key} = :{$key} AND";
+            }
+            // Drop the last `AND`
+            $cols_values = substr($cols_values, 0, -4);
+        }
+
+        // Prepare the clause LIMIT if limit exist
+        if ($limit !== null) {
+            $limits = " LIMIT {$limit}";
+        }
+
+        // Build the clause JOIN
+        foreach ($foreigns as $table => $val) {
+            $joins .= "LEFT JOIN {$table}
+            ON {$parent}.{$val[0]} = {$table}.{$val[1]} ";
+        }
+
+        // Build the list of colums to SELECT, just the FOREIGN KEY
+        $selected_columns = "{$parent}.*";
+        foreach ($foreigns as $table => $val) {
+            $selected_columns .= ", {$table}.{$val[2]} AS {$val[2]}";
+        }
+
+        // Build the final Query
+        $stmt = "SELECT {$selected_columns} FROM {$parent}
+                    {$joins}
+                    {$cols_values}{$limits}";
+
+        if (!$rows = parent::query($stmt, $params)) {
+            return false;
+        }
+
+        return $limit === 1 ? $rows[0] : $rows;
+    }
+    
+    /**
      * List data from 2 tables form the DB
      */
     public static function join($table1, $table2, $val1, $val2, $params = [], $limit = null) {

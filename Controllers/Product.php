@@ -6,7 +6,12 @@ class Product extends Controller {
     }
 
     public function index() {
-        $products = ProductModel::join('product', 'brand', 'brand_id_brand', 'brand_id');
+        //$products = ProductModel::join('product', 'brand', 'brand_id_brand', 'brand_id');
+        $joins = [
+            "category" => ["category_id_category", "category_id", "category_name"],
+            "brand" => ["brand_id_brand", "brand_id", "brand_name"],
+        ];
+        $products = ProductModel::multiJoin('product', $joins);
 
         // INSERT
         $dataInsert = [
