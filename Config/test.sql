@@ -28,6 +28,27 @@ CREATE TABLE IF NOT EXISTS `test`.`roles` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
+-- Table `test`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `test`.`users` (
+  `user_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_username` TEXT NOT NULL,
+  `user_password` TEXT NOT NULL,
+  `user_mail` TEXT NOT NULL,
+  `role_id_role` BIGINT UNSIGNED NOT NULL,
+  `user_status` INT NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `user_username_UNIQUE` (`user_username` ASC),
+  UNIQUE INDEX `user_mail_UNIQUE` (`user_mail` ASC),
+  INDEX `fk_user_role_idx` (`role_id_role` ASC),
+  CONSTRAINT `fk_product_role`
+    FOREIGN KEY (`role_id_role`)
+    REFERENCES `test`.`roles` (`role_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
 -- Table `test`.`category`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `test`.`category` (

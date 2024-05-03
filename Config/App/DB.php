@@ -179,4 +179,17 @@ class DB extends DatabaseConnection {
 
         return $row;
     }
+
+    public static function validateData(String $value) {
+        // Drop the spaces at begin & end
+        $value = trim($value);
+        // Validate the html special chars to prevent HTML inyection
+        $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+        return $value;
+    }
+
+    public static function cryptPass(String $password) {
+        $pass_crypt = password_hash($password, PASSWORD_DEFAULT);
+        return $pass_crypt;
+    }
 }

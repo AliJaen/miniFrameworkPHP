@@ -8,6 +8,8 @@
   <script src="<?= LIBS ?>/simplebar/dist/simplebar.js"></script>
   <!-- JS Admin -->
   <script src="<?= ASSETS ?>/app/js/<?php echo $data["function_js"]; ?>"></script>
+  <!-- URL JS -->
+  <script>const base_url = <?= base_url; ?></script>
 </body>
 
 </html>

@@ -1,12 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="<?= SITE_LANG ?>">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="<?= SITE_CHARSET ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Modernize Free</title>
-  <link rel="shortcut icon" type="image/png" href="<?= IMG ?>/logos/favicon.png" />
-  <link rel="shortcut icon" type="image/png" href="<?= IMG ?>/logos/favicon.png" />
+  <?= get_favicon(); ?>
   <link rel="stylesheet" href="<?= CSS ?>/styles.min.css" />
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" /> -->
 </head>
