@@ -31,11 +31,22 @@ class Login extends Controller {
             }
 
             if (!$error) {
-                $response = LoginModel::listEqual("users", ["user_username" => $validatedData["user_username"]]);
+                $response = LoginModel::listEqual("users", ["user_username" => $validatedData["user_username"]], 1);
                 if (!$response) {
                     echo json_encode(["message" => "Invalid data. User not registered"]);
                 } else {
-                    echo json_encode(["message" => "success", "data" => $response]);
+                    if (password_verify($validatedData["user_password"], $response["user_password"])) {
+                        $_SESSION['iduser'] = $response["user_id"];
+                        $_SESSION['username'] = $response["user_username"];
+                        $_SESSION['mail'] = $response["user_mail"];
+                        $_SESSION['role'] = $response["role_id_role"];
+                        $_SESSION['authenticated'] = true;
+                        $_SESSION['lastAccess'] = date("Y-n-j H:i:s");
+                        $jwt = LoginModel::generateJWT($response["user_id"], $response["role_id_role"], $response["user_mail"], $response["user_username"]);
+                        echo json_encode(["message" => "success", "jwt" => $jwt, "location" => base_url."/Dashboard"]);
+                    } else {
+                        echo json_encode(["message" => "Invalid data. Password not match"]);
+                    }
                 }
             } else {
                 echo http_response_code(406);
@@ -44,6 +55,16 @@ class Login extends Controller {
         } else {
             echo http_response_code(405);
             echo json_encode(["error" => "Method not Allowed"]);
+        }
+    }
+    
+    public function test() {
+        $test = LoginModel::decodeJWT();
+        if ($test !== null) {
+            print_r($test);
+        } else {
+            echo http_response_code(401);
+            echo json_encode(["error" => "Unauthorized"]);
         }
     }
 }

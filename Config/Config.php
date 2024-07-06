@@ -6,9 +6,9 @@ const base_url = 'http://localhost/miniFrameworkPHP';
  * DB constants
  */
 const DB_HOST = "localhost";
-const DB_NAME = ""; // It's the default DB, but the constructor accept another DB to use
+const DB_NAME = "test"; // It's the default DB, but the constructor accept another DB to use
 const DB_USER = "root"; // Use the correct USER
-const DB_PASSWORD = "*********"; // Change the password according to your DB
+const DB_PASSWORD = "mYp@ssW0rd"; // Change the password according to your DB
 const DB_CHARSET = "utf8";
 
 /**
@@ -29,7 +29,9 @@ define('SITE_LOGO_MAIN', 'main.logo.png');
  */
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__));
+define('VENDOR', ROOT . DS . 'vendor');
 define('CONTROLLER', ROOT . DS . 'Controllers');
+define('HOME', CONTROLLER . DS . 'Dashboard');
 define('VIEW', ROOT . DS . 'Views');
 define('TEMPLATES', VIEW . DS . 'Templates');
 define('IMAGE_PATH', ROOT . DS . 'Assets' . DS . 'img' . DS . 'logos');

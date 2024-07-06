@@ -45,7 +45,17 @@ function login() {
               return response.json();
           })
           .then(data => {
-              // Manejar los datos recibidos
+              if (data.message === "success") {
+                // Otros errores inesperados
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: "Welcome",
+                    confirmButtonColor: '#2ECC71',
+                }).then(function() {
+                    window.location = data.location;
+                });
+              }
               console.log('Respuesta del servidor:', data);
           })
           .catch(error => {
@@ -63,7 +73,7 @@ function login() {
                     title: 'Oops...',
                     text: error,
                     confirmButtonColor: '#2ECC71',
-                });
+                  });
                   console.error('Ocurrió un error inesperado:', error);
               }
           });

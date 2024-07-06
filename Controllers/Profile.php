@@ -1,14 +1,15 @@
 <?php
 
-class Dashboard extends Controller {
+class Profile extends Controller {
     public function __construct() {
         Auth::noAuth();
         parent::__construct();
     }
+
     public function index() {
         $data = [
-            "page_name" => "Dashboard",
-            "function_js" => "dashboard.js",
+            "page_name" => "Profile",
+            "function_js" => "profile.js",
         ];
         $this->views->getView($this, "index", $data);
     }

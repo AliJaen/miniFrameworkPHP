@@ -1,4 +1,7 @@
 <?php
+require_once VENDOR . "/autoload.php";
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class DB extends DatabaseConnection {
     /**
@@ -191,5 +194,45 @@ class DB extends DatabaseConnection {
     public static function cryptPass(String $password) {
         $pass_crypt = password_hash($password, PASSWORD_DEFAULT);
         return $pass_crypt;
+    }
+
+    public static function generateJWT($id, $role, $email, $username) {
+        $secretKey = "jIdV4#iocE=cD";
+        $time = time();
+        $payload = [
+            "isd" => "localhost",
+            "aud" => "localhost",
+            "iat" => $time,
+            "exp" => $time + (60*60*34),
+            "data" => [
+                "id" => $id,
+                "role" => $role,
+                "email" => $email,
+                "username" => $username,
+            ],
+        ];
+
+        $jwt = JWT::encode($payload, $secretKey, "HS256");
+
+        return $jwt;
+    }
+
+    public static function decodeJWT() {
+        $secretKey = "jIdV4#iocE=cD";
+        $header = apache_request_headers();
+
+        if (isset($header["Authorization"])) {
+            $header = $header["Authorization"];
+
+            try {
+                $decode = JWT::decode($header, new Key($secretKey, "HS256"));
+                return $decode->data;
+            } catch (Exception $e) {
+                return null;
+            }
+        } else {
+            // Manejar el caso en el que no se proporciona un token de autorización
+            return null;
+        }
     }
 }
